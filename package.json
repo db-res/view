@@ -1,0 +1,22 @@
+{
+  "name": "view",
+  "version": "1.0.0",
+  "description": "null",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/db-res/view.git"
+  },
+  "author": "dbres",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/db-res/view/issues"
+  },
+  "homepage": "https://github.com/db-res/view#readme",
+  "dependencies": {
+    "photo-sphere-viewer": "^4.7.2"
+  }
+}
