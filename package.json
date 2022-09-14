@@ -1,22 +1,18 @@
 {
   "name": "view",
-  "version": "1.0.0",
-  "description": "null",
-  "main": "index.js",
+  "version": "0.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/db-res/view.git"
-  },
-  "author": "dbres",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/db-res/view/issues"
-  },
-  "homepage": "https://github.com/db-res/view#readme",
   "dependencies": {
-    "photo-sphere-viewer": "^4.7.2"
+    "photo-sphere-viewer": "^4.7.2",
+    "vue": "^3.2.38",
+    "vue-router": "^4.1.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.0.3",
+    "vite": "^3.0.9"
   }
 }
