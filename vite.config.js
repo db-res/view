@@ -10,5 +10,18 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  build: {
+    outDir:'docs',
+    rollupOptions: {
+      output: {
+        // 入口文件名
+        entryFileNames: 'assets/[name].js',
+        // 块文件名
+        chunkFileNames: 'assets/[name]-[hash].js',
+        // 资源文件名 css 图片等等
+        assetFileNames: 'assets/[name]-[hash]-balabala.[ext]',
+      },
+    },
   }
 })
