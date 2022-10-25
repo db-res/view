@@ -27,5 +27,11 @@ npm run dev
 ```sh
 npm run build
 git add dist
+git commit -m'something'
 git subtree push --prefix dist origin gh-pages
+```
+
+#### scss 引入
+```
+npm install sass node-sass sass-loader -D
 ```
