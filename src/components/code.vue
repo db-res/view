@@ -1,5 +1,5 @@
 <template>
-    <prism-editor class="my-editor" v-model="code" :highlight="highlighter" line-numbers></prism-editor>
+    <prism-editor class="my-editor" v-model="code" :highlight="highlighter" line-numbers :readonly="false"></prism-editor>
 </template>
 
 <script>
@@ -20,7 +20,7 @@
         },
         data () {
             return { 
-                
+
             }
         },
         methods: {
