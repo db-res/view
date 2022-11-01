@@ -31,6 +31,19 @@
         
       }
     },
+    created(){
+      let search = location.search.split('?'),obj={}
+      search.map(item=>{
+        let i = item&&item.split('=')
+        if(i){
+          obj[i[0]] = i[1]
+        }
+      })
+      console.log(obj);
+      if(obj.type){
+        this.$store.commit('updateNtype',obj.type)
+      }
+    },  
     mounted() {
 
     },

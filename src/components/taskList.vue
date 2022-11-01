@@ -46,6 +46,7 @@ export default{
                 {name:'threejs实例', id:1, finish:false},
                 {name:'音乐实例', id:2, finish:false},
                 {name:'markdown实例', id:3, finish:false},
+                {name:'文字游戏', id:3, finish:false},
             ]
         }
     }
