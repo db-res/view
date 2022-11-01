@@ -82,6 +82,7 @@ body {
 }
 p {
 	line-height: 22px;
+	white-space: pre-line;
 }
 :focus {
 	outline: 1;

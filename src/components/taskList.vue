@@ -42,7 +42,7 @@ export default{
     data(){
         return {
             list:[
-                {name:'原神本地搭建实例', id:0, finish:false},
+                {name:'原神本地搭建实例', id:0, finish:true},
                 {name:'threejs实例', id:1, finish:false},
                 {name:'音乐实例', id:2, finish:false},
                 {name:'markdown实例', id:3, finish:false},
