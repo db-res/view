@@ -4,6 +4,13 @@
   .content{
     display: flex;
   }
+  .show{
+    position: relative;
+    width: 100%;
+    // height: 100%;
+    height: calc(100vh - 60px);;
+    z-index: 2;
+  }
 }
 </style>
 <template>
@@ -11,7 +18,10 @@
     <photoSphere :background="true"></photoSphere>
     <navT></navT>
     <div class="content mg-t-10">
-      <contentList class="mg-r-10 mg-l-10" style="flex-grow: 6;"></contentList>
+      <contentList class="mg-r-10 mg-l-10" style="flex-grow: 6;" v-if="type == 'xcx' || type == 'game'"></contentList>
+      <div class="mg-r-10 mg-l-10" style="flex-grow: 6;" v-else>
+        <iframe src="https://db-res.github.io/move/" class="show" frameborder="0"></iframe>
+      </div>
       <taskList class="mg-r-10" style="flex-grow: 1;"></taskList>
     </div>
   </div>
@@ -28,9 +38,16 @@
     },
     data () {
       return {
-        
+        type: this.$store.state.nav.type
       }
     },
+    watch:{
+        '$store.state.nav.type':{
+            handler(n,o){
+                this.type = n
+            }
+        }
+    },  
     created(){
       let search = location.search.split('?'),obj={}
       search.map(item=>{
@@ -39,7 +56,6 @@
           obj[i[0]] = i[1]
         }
       })
-      console.log(obj);
       if(obj.type){
         this.$store.commit('updateNtype',obj.type)
       }
