@@ -27,6 +27,9 @@
       <div class="mg-r-10 mg-l-10 W100" v-show="type == 'three'">
         <iframe style="background-color: #eeeeee;" src="https://db-res.github.io/move/" loading class="show frame" frameborder="0"></iframe>
       </div>
+      <div class="mg-r-10 mg-l-10 W100" v-show="type == 'music'">
+        <musicBox></musicBox>
+      </div>
       <taskList class="mg-r-10" style="flex-grow: 1;"></taskList>
     </div>
   </div>
@@ -36,6 +39,7 @@
   import contentList from '../components/contentList.vue'
   import navT from '../components/nav.vue'
   import taskList from '../components/taskList.vue'
+  import musicBox from '../components/music.vue'
 </script>
 <script>
   export default {
@@ -50,6 +54,7 @@
         '$store.state.nav.type':{
             handler(n,o){
                 this.type = n
+                console.log(n);
             }
         }
     },  

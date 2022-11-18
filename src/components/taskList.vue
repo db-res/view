@@ -43,10 +43,12 @@ export default{
         return {
             list:[
                 {name:'原神本地搭建实例', id:0, finish:true},
-                {name:'threejs实例', id:1, finish:false},
+                {name:'threejs实例', id:1, finish:true},
                 {name:'音乐实例', id:2, finish:false},
                 {name:'markdown实例', id:3, finish:false},
                 {name:'文字游戏', id:3, finish:false},
+                {name:'uni音乐app', id:4, finish:false},
+                {name:'uni记账app', id:5, finish:false},
             ]
         }
     }
