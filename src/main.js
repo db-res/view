@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store/index'
 
+import './style/font_tkasbq12mmf/iconfont.css'
 import './assets/main.css'
+import './style/convenient.scss'
 
 // import * as Vue from 'vue' // in Vue 3
 import axios from 'axios'
