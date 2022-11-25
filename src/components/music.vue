@@ -13,9 +13,14 @@
                     <p class="gray f12">演唱者：xxxxx</p>
                 </div>
             </div>
-            <div class="flex jc-center" >
+            <div class="flex jc-center" style="height: calc(100% - 186px);">
                 <div class="">
-
+                    <audio ref="audioDom" src="https://anysss.s3.ladydaily.com/music/3189549952.mp3"></audio>
+                </div>
+                <div style="overflow-y: auto;" id="wordBox">
+                    <div class="txal mg-b-6" v-for="(item,index) in wordList">
+                        <p>{{item.text}}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -26,10 +31,14 @@
                     <div class="f24 icon iconfont pointer mg-r-12 mg-l-12" :class="[isplay?'icon-ai07':'icon-bofang']" @click="play" data-type="1"></div>
                     <div class="icon iconfont icon-ziyuan pointer"></div>
                 </div>
-                <div class="W100 rel pre-box bor-20">
-                    <div ref="schedule" class="W100 h3 bor-20"></div>
-                    <div ref="scheduleMov" class="abs l0 h6 sche-box bor-20" style="top: -1.5px;" :style="{'width':`${schedule}%`}"></div>
-                    <div class="abs t-6 sch-btn bor-50 w16 h16 z10 pointer" @mousedown="move" :style="{'left': `calc(${schedule}% - 10px)`}"></div>
+                <div class="W100 flex aic">
+                    <div class="mg-r-14">{{schedule}}</div>
+                    <div class="fg1 h3 rel pre-box bor-20">
+                        <div ref="schedule" class="W100 h3 bor-20"></div>
+                        <div ref="scheduleMov" class="abs l0 h6 sche-box bor-20" style="top: -1.5px;" :style="{'width':`${schedule}%`}"></div>
+                        <div class="abs t-6 sch-btn bor-50 w16 h16 z10 pointer" @mousedown="move" :style="{'left': `calc(${schedule}% - 10px)`}"></div>
+                    </div>
+                    <div class="mg-l-14">{{total}}</div>
                 </div>
             </div>
         </div>
@@ -45,38 +54,143 @@
                 isplay:false,
                 schedule:0,
                 total:100,
-                timer:null
+                timer:null,
+                musicWord:{
+                    '00:00.91':'Beyond',
+                    '00:03.20':'海闊天空',
+                    '00:06.32':'作詞：黃家駒',
+                    '00:09.48':'作曲：黃家駒',
+                    '00:12.60':'',
+                    '00:18.04':'今天我　寒夜裡看雪飄過',
+                    '01:42.28':'今天我　寒夜裡看雪飄過',
+                    '00:24.64':'懷著冷卻了的心窩漂遠方',
+                    '01:48.92':'懷著冷卻了的心窩漂遠方',
+                    '00:30.52':'風雨裡追趕',
+                    '01:54.68':'風雨裡追趕',
+                    '00:33.60':'霧裡分不清影蹤',
+                    '01:57.84':'霧裡分不清影蹤',
+                    '00:36.76':'天空海闊你與我',
+                    '02:01.00':'天空海闊你與我',
+                    '00:39.84':'可會變(誰沒在變)',
+                    '02:04.12':'可會變(誰沒在變)',
+                    '00:42.37':'',
+                    '00:43.01':'多少次　迎著冷眼與嘲笑',
+                    '00:49.58':'從沒有放棄過心中的理想',
+                    '00:55.48':'一剎那恍惚',
+                    '00:58.60':'若有所失的感覺',
+                    '01:01.68':'不知不覺已變淡',
+                    '01:04.72':'心裡愛(誰明白我)',
+                    '01:07.97':'',
+                    '01:08.34':'原諒我這一生不羈放縱愛自由',
+                    '02:07.61':'原諒我這一生不羈放縱愛自由',
+                    '03:19.32':'原諒我這一生不羈放縱愛自由',
+                    '03:56.72':'原諒我這一生不羈放縱愛自由',
+                    '01:15.40':'也會怕有一天會跌倒',
+                    '02:14.64':'也會怕有一天會跌倒',
+                    '03:26.36':'也會怕有一天會跌倒',
+                    '04:03.80':'也會怕有一天會跌倒',
+                    '01:21.56':'背棄了理想　誰人都可以',
+                    '02:20.88':'背棄了理想　誰人都可以',
+                    '03:32.64':'背棄了理想　誰人都可以',
+                    '03:45.08':'背棄了理想　誰人都可以',
+                    '04:10.04':'背棄了理想　誰人都可以',
+                    '01:27.79':'那會怕有一天只你共我',
+                    '02:27.08':'那會怕有一天只你共我',
+                    '03:38.84':'那會怕有一天只你共我',
+                    '03:51.26':'那會怕有一天只你共我',
+                    '04:16.28':'那會怕有一天只你共我',
+                    '01:33.64':'',
+                    '02:07.20':'',
+                    '02:32.96':'',
+                    '03:18.80':'',
+                    '03:43.92':'',
+                    '03:56.04':'',
+                    '03:08.01':'仍然自由自我',
+                    '03:11.52':'永遠高唱我歌',
+                    '03:14.68':'走遍千里',
+                    '04:20.92':'完',
+                },
+                wordList:[]
             }
         },
         watch:{
             // let that = this
             isplay:function(n,o){
-                if(n){
-                    let that = this
-                    this.timer = setInterval(function (params) {
-                        if(that.schedule == 100){
-                            clearInterval(that.timer)
-                            that.isplay = false
-                        }else{
-                            that.schedule += 1
-                        }
-                    },1000)
-                }else{
-                    clearInterval(this.timer)
-                }
+                // if(n){
+                //     let that = this
+                //     this.timer = setInterval(function (params) {
+                //         if(that.schedule == 100){
+                //             clearInterval(that.timer)
+                //             that.isplay = false
+                //         }else{
+                //             that.schedule += 1
+                //         }
+                //     },1000)
+                // }else{
+                //     clearInterval(this.timer)
+                // }
             }
         },
         created(){
             // this.axios.get(`https://music.163.com/api/search/get/web?csrf_token=hlpretag=&hlposttag=&s=${this.keyWord}&type=${this.type}&offset=0&total=true&limit=20`).then((response) => {
             //     console.log(response.data)
             // })
+            for (const index in this.musicWord) {
+                // console.log(index,this.musicWord[index]);
+                let a = index.split(':')
+                a = a.map(item=>{return Number(item)})
+                this.wordList.push({
+                    'text': this.musicWord[index],
+                    time: (a[0] * 60) + a[1]
+                }) 
+                // debugger
+                // if (Object.hasOwnProperty.call(object, index)) {
+                    //     const element = object[index];
+                    
+                    // }
+                }
+                console.log(this.wordList);
+            
+        },
+        mounted(){
+            let audio= this.$refs.audioDom,that = this
+            audio.addEventListener('canplay',function(){
+                console.log(audio.duration);
+                that.total = that.numFun(audio.duration.toFixed(2))
+            })
         },
         methods:{
-            play(e){
-                let {type} = e.currentTarget.dataset
-                // console.log(type);
-                this.isplay = !this.isplay
+            numFun(n){
+                let nc = Number(n),s,m;
+                if(nc / 60 > 1){
+                    s = (nc % 60).toFixed(2) + ''
+                    m = Math.floor(nc / 60) + ''
+                }else{
+                    m = '00'
+                    s = nc + ""
+                }
+                return this.toSt(m) +":"+ this.toSt(s)
             },
+            toSt(i){
+                return i.length > 1?i:('0'+i)
+            },
+            play(e){
+                let {type} = e.currentTarget.dataset, audio= this.$refs.audioDom,that=this;
+                this.isplay = !this.isplay
+                if(this.isplay){
+                    audio.play()
+                    audio.addEventListener('timeupdate',that.listenterPlay)
+                }else{
+                    audio.pause()
+                    audio.removeEventListener('timeupdate',that.listenterPlay)
+                }
+            },
+            listenterPlay(){
+                let audio= this.$refs.audioDom
+                let a = ((audio.currentTime / audio.duration) * 100).toFixed(2)
+                console.log(audio.currentTime, audio.duration, a);
+                this.schedule = this.numFun(a)
+            },  
             move(e){
                 let box = e.target, pageX = e.pageX, boxX = pageX - box.offsetLeft, that=this;
 
@@ -140,6 +254,29 @@
     }
     .pre-box{
         background: rgb(206, 255, 232);
+    }
+    #wordBox{
+        /* 设置滚动条的样式 */
+        ::-webkit-scrollbar {
+            width:8px;
+        }
+        /* 滚动槽 */
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow:inset 0 0 6px #b3b3b370;
+            border-radius:10px;
+        }
+        /* 滚动条滑块 */
+        ::-webkit-scrollbar-thumb {
+            border-radius:10px;
+            background:#acacac50;
+            -webkit-box-shadow:inset 0 0 6px #acacac80;
+        }
+        ::-webkit-scrollbar-thumb:window-inactive {
+            background:#aaaaaa70;
+        }
+        ::-webkit-scrollbar-corner{
+            border-radius:10px;
+        }
     }
 }
 </style>
