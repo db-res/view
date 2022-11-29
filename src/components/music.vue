@@ -177,7 +177,7 @@
                 return this.toSt(m) +":"+ this.toSt(s)
             },
             toSt(i){
-                return i.length > 1?i:('0'+i)
+                return i.length > 1?i:( '0' + i )
             },
             play(e){
                 let {type} = e.currentTarget.dataset, audio= this.$refs.audioDom,that=this;
