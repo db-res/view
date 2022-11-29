@@ -18,7 +18,7 @@
                     <audio ref="audioDom" src="https://anysss.s3.ladydaily.com/music/3189549952.mp3"></audio>
                 </div>
                 <div style="overflow-y: auto;" id="wordBox">
-                    <div class="txal mg-b-6" v-for="(item,index) in wordList">
+                    <div class="txal mg-b-6" :class="[item.time>time?'':'bold']" v-for="(item,index) in wordList">
                         <p>{{item.text}}</p>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     <div class="icon iconfont icon-ziyuan pointer"></div>
                 </div>
                 <div class="W100 flex aic">
-                    <div class="mg-r-14">{{schedule}}</div>
+                    <div class="mg-r-14">{{(schedule)}}</div>
                     <div class="fg1 h3 rel pre-box bor-20">
                         <div ref="schedule" class="W100 h3 bor-20"></div>
                         <div ref="scheduleMov" class="abs l0 h6 sche-box bor-20" style="top: -1.5px;" :style="{'width':`${schedule}%`}"></div>
@@ -110,7 +110,8 @@
                     '03:14.68':'走遍千里',
                     '04:20.92':'完',
                 },
-                wordList:[]
+                wordList:[],
+                time:0,
             }
         },
         watch:{
@@ -135,12 +136,15 @@
             // this.axios.get(`https://music.163.com/api/search/get/web?csrf_token=hlpretag=&hlposttag=&s=${this.keyWord}&type=${this.type}&offset=0&total=true&limit=20`).then((response) => {
             //     console.log(response.data)
             // })
-            for (const index in this.musicWord) {
+            this.wordList = []
+            for (let index in this.musicWord) {
                 // console.log(index,this.musicWord[index]);
                 let a = index.split(':')
-                a = a.map(item=>{return Number(item)})
+                a.forEach((item,index,arr)=>{
+                    arr[index] = Number(item)
+                })
                 this.wordList.push({
-                    'text': this.musicWord[index],
+                    text: this.musicWord[index],
                     time: (a[0] * 60) + a[1]
                 }) 
                 // debugger
@@ -149,6 +153,7 @@
                     
                     // }
                 }
+                this.wordList = JSON.parse(JSON.stringify(this.wordList))
                 console.log(this.wordList);
             
         },
@@ -163,7 +168,7 @@
             numFun(n){
                 let nc = Number(n),s,m;
                 if(nc / 60 > 1){
-                    s = (nc % 60).toFixed(2) + ''
+                    s = (nc % 60).toFixed(0) + ''
                     m = Math.floor(nc / 60) + ''
                 }else{
                     m = '00'
@@ -187,9 +192,10 @@
             },
             listenterPlay(){
                 let audio= this.$refs.audioDom
-                let a = ((audio.currentTime / audio.duration) * 100).toFixed(2)
+                let a = ((audio.currentTime / audio.duration) * 100).toFixed(0)
                 console.log(audio.currentTime, audio.duration, a);
                 this.schedule = this.numFun(a)
+                this.time = audio.currentTime
             },  
             move(e){
                 let box = e.target, pageX = e.pageX, boxX = pageX - box.offsetLeft, that=this;
@@ -255,28 +261,28 @@
     .pre-box{
         background: rgb(206, 255, 232);
     }
-    #wordBox{
+    // #wordBox{
         /* 设置滚动条的样式 */
-        ::-webkit-scrollbar {
-            width:8px;
+        #wordBox::-webkit-scrollbar {
+            width:6px;
         }
         /* 滚动槽 */
-        ::-webkit-scrollbar-track {
+        #wordBox::-webkit-scrollbar-track {
             -webkit-box-shadow:inset 0 0 6px #b3b3b370;
             border-radius:10px;
         }
         /* 滚动条滑块 */
-        ::-webkit-scrollbar-thumb {
+        #wordBox::-webkit-scrollbar-thumb {
             border-radius:10px;
             background:#acacac50;
             -webkit-box-shadow:inset 0 0 6px #acacac80;
         }
-        ::-webkit-scrollbar-thumb:window-inactive {
+        #wordBox::-webkit-scrollbar-thumb:window-inactive {
             background:#aaaaaa70;
         }
-        ::-webkit-scrollbar-corner{
+        #wordBox::-webkit-scrollbar-corner{
             border-radius:10px;
         }
-    }
+    // }
 }
 </style>

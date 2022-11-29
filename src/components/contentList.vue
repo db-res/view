@@ -66,29 +66,29 @@ export default {
                     \n MongoDB （版本大于4.0即可），地址：https://www.mongodb.com/try/download/community
                     \n mitmproxy(代理，官方推荐)，地址：https://mitmproxy.org/`,
                     code:[`// 确保上面的软件下载安装好后，接下来就是本体相关的一些东西了
-// 首先，获取最新的grasscutter.jar，最好放在一个新文件夹下，地址：
-https://github.com/Grasscutters/Grasscutter/releases
-// 然后，在grasscutter.jar所在的文件夹下打开cmd，或者power shell，执行：
-java -jar grasscutter.jar  // 执行完后会得到一堆文件，另注意你的jar包文件名，执行命令时需要保持一致
-// 接着，在当前文件夹下新建resources文件夹，下载Resources内容，地址：
-https://github.com/Koko-boya/Grasscutter_Resources // 该资源也就是你游玩的版本
-// 继续下载keystore文件，地址：
-https://github.com/Grasscutters/Grasscutter/blob/main/keystore.p12
-// 以上资源下载好后，在刚刚打开的控制台（cmd或power shell）执行：
-java -jar grasscutter.jar -handbook  // 执行命令时需与jar包名一致
-// 注意，在最后的启动中，可能会涉及到端口放行问题，所以最好前往config文件中修改443端口，换成其他端口如：888
-// 最后执行代码
-java -jar grasscutter.jar  // 如果没有报错，提示你服务已启动，说明服务端的部署已完成了
+                    // 首先，获取最新的grasscutter.jar，最好放在一个新文件夹下，地址：
+                    https://github.com/Grasscutters/Grasscutter/releases
+                    // 然后，在grasscutter.jar所在的文件夹下打开cmd，或者power shell，执行：
+                    java -jar grasscutter.jar  // 执行完后会得到一堆文件，另注意你的jar包文件名，执行命令时需要保持一致
+                    // 接着，在当前文件夹下新建resources文件夹，下载Resources内容，地址：
+                    https://github.com/Koko-boya/Grasscutter_Resources // 该资源也就是你游玩的版本
+                    // 继续下载keystore文件，地址：
+                    https://github.com/Grasscutters/Grasscutter/blob/main/keystore.p12
+                    // 以上资源下载好后，在刚刚打开的控制台（cmd或power shell）执行：
+                    java -jar grasscutter.jar -handbook  // 执行命令时需与jar包名一致
+                    // 注意，在最后的启动中，可能会涉及到端口放行问题，所以最好前往config文件中修改443端口，换成其他端口如：888
+                    // 最后执行代码
+                    java -jar grasscutter.jar  // 如果没有报错，提示你服务已启动，说明服务端的部署已完成了
 
 
-// 接着就是客户端启动链接上上面启动的服务端，第三方启动器地址：
-https://github.com/Grasscutters/GrassClipper/releases  // 启动器有很多，也可以自行找其他的
-// 打开后去设置里面更换语言，在把服务端给出的服务器地址填写上，当然上面的启动器，还需要下载一下代理，在他的设置页上有，下载完就可以直接链接了
-// 最后就是登录了，先要创建一个角色，命令可在下方的页面找，地址：
-https://github.com/Grasscutters/Grasscutter/wiki/Commands
-// 备注：还有一些其他资源，插件，可以自行下载，地址：
-https://mihoyo-is-in.icu/awesome#%E8%B5%84%E6%BA%90
-`],
+                    // 接着就是客户端启动链接上上面启动的服务端，第三方启动器地址：
+                    https://github.com/Grasscutters/GrassClipper/releases  // 启动器有很多，也可以自行找其他的
+                    // 打开后去设置里面更换语言，在把服务端给出的服务器地址填写上，当然上面的启动器，还需要下载一下代理，在他的设置页上有，下载完就可以直接链接了
+                    // 最后就是登录了，先要创建一个角色，命令可在下方的页面找，地址：
+                    https://github.com/Grasscutters/Grasscutter/wiki/Commands
+                    // 备注：还有一些其他资源，插件，可以自行下载，地址：
+                    https://mihoyo-is-in.icu/awesome#%E8%B5%84%E6%BA%90
+                    `],
                     createTime:'2022/10/31',
                     tab:['游戏','原神'],
                     type:'game'
