@@ -9,14 +9,24 @@
         height: 100vh;
     }
     .mode{
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: #00000090;
-  }
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(to left, rgba(123, 255, 123, 0), rgba(255, 81, 133, 0.5));
+      animation: lg-an 18s linear infinite;
+    }
+
+    @keyframes lg-an{
+      0%{background-color: rgb(121, 255, 226);}
+      20%{background-color: rgb(255, 148, 116);}
+      40%{background-color: rgb(255, 253, 119);}
+      60%{background-color: rgb(121, 255, 132);}
+      80%{background-color: rgb(128, 172, 255);}
+      100%{background-color: rgb(121, 255, 226);}
+    }
 </style>
 <template>
     <div>
@@ -71,7 +81,7 @@
     },
     mounted(){
         let that = this,data = this.background?new init1():new init2()
-        this.view = new Viewer(data);
+        // this.view = new Viewer(data);
     },
     methods: {
       ready(){

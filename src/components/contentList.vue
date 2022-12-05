@@ -30,7 +30,7 @@
                 <p class="mg-t-10">代码参考如下：</p>
             </div>
             <code_view class="mg-b-10" :code="item.code[0]"></code_view>
-            <div class="mg-b-10 f14" style="color: #666666;">{{item.createTime}} • <span v-for=" (i, j) in item.tab" :key="j">{{i}}</span> </div>
+            <div class="mg-b-10 f14" style="color: #666666;">{{item.createTime}} • <span v-for=" (i, j) in item.tab" :key="j">{{((j - 1) != item.tab.length)?'、':''}}{{i}}</span></div>
         </div>
     </div>
 </template>
@@ -92,6 +92,38 @@ export default {
                     createTime:'2022/10/31',
                     tab:['游戏','原神'],
                     type:'game'
+                },
+                {
+                    id:3,
+                    title:'小程序使用css3滤镜踩坑',
+                    scenes:'整个页面需要做灰白滤镜效果',
+                    content:`需求需要把首页色调改成灰白色调，当时听到这个需求的第一个反应就是在层级上改一个蒙版，改成rgb通道改一下（ps错乱），但是层级上叠上一层的话，
+                    对于一些点击交互就会受到影响，所以这个方法明显不太行，又想到当时有个网站已经有现成的了，直接去扒拉源码看看，翻查了下就找到了这个差点被我遗忘的css3新属性--滤镜filter；
+                        grayscale值转灰度图像，值为0-1或0%-100%，100%为完全转化灰度，在小程序的使用期间遇到渲染性能问题，要转化的页面是一个无限滚动加载的页面，而滤镜是将页面转化为灰度图;
+                        当在小程序页面中的page或者view中设置了该属性时，期望是在页面的最外层box上设置一次，即可完成整个页面的灰化，实际效果却出现了偏差，整个页面确实灰化了，但也出现了卡顿，
+                    页面布局出现多余的空白等问题，在查阅相关资料与实际测试中，得到的解决方案也很简单，在页面中单独套一层view，或者单独给每个模块加一个filter，即可解决，通过对比，很明显可以看出卡顿跟空白是由page跟view处设置filter导致的；
+                        在查找相关问题时，也浏览了官方社区，找到了类似的问题，不过并没找到官方对该问题给出的具体回复
+                    `,
+                    code:[`filter: none | blur() | brightness() | contrast() | drop-shadow() | grayscale() | hue-rotate() | invert() | opacity() | saturate() | sepia() | url();
+                        filter: grayscale(95%);
+                        -webkit-filter: grayscale(95%);
+                        -moz-filter: grayscale(95%);
+                        -ms-filter: grayscale(95%);
+                        -o-filter: grayscale(95%);
+                        -webkit-filter: grayscale(.95);`],
+                    createTime:'2022/12/05',
+                    tab:['微信小程序'],
+                    type:'xcx'
+                },
+                {
+                    id:4,
+                    title:'图片压缩-重绘',
+                    scenes:'对图片打水印，压缩',
+                    content:` `,
+                    code:[``],
+                    createTime:'2022/10/25',
+                    tab:['图片压缩','水印'],
+                    type:'js'
                 },
             ]
         }

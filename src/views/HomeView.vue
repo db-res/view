@@ -23,7 +23,7 @@
     <photoSphere :background="true"></photoSphere>
     <navT></navT>
     <div class="content mg-t-10" style="flex-grow: 6;">
-      <contentList class="mg-r-10 mg-l-10 W100" v-show="type == 'xcx' || type == 'game'"></contentList>
+      <contentList class="mg-r-10 mg-l-10 W100" v-show="type == 'xcx' || type == 'game' || type == 'js'"></contentList>
       <div class="mg-r-10 mg-l-10 W100" v-show="type == 'three'">
         <iframe style="background-color: #eeeeee;" src="https://db-res.github.io/move/" loading class="show frame" frameborder="0"></iframe>
       </div>

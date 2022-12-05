@@ -49,6 +49,7 @@
                     {name:'游戏',value:'game',id:2},
                     {name:'threejs',value:'three',id:3},
                     {name:'音乐',value:'music',id:4},
+                    {name:'js',value:'js',id:5},
                 ],
                 type:''
             }
