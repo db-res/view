@@ -12,10 +12,16 @@
       z-index: 9;
       // height: 100vh;
       // overflow-y: auto;
-      background: white;
       width: 100%;
       display: inline-block;
       height: fit-content;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.404);
+      .sceneBox{
+        border-radius: 2px;
+        background-color: #66666694;
+        color: aliceblue;
+      }
     }
 }
 </style>
@@ -24,13 +30,13 @@
     <div class="Listbox">
         <div class="contentbox pd-10 mg-b-10"  v-for="item in list" :style="{'display':type == item.type?'block':'none'}" :key="item.id"> 
             <div class="mg-b-10 f20" style="font-weight: 500;">{{item.title}}</div>
-            <div class="mg-b-10  pd-10" style="border-radius: 0px;background-color: #666666;color: aliceblue;">
+            <div class="mg-b-10  pd-10 sceneBox" style="">
                 <p class="">场景：{{item.scenes}}</p>
                 <p class="mg-t-10">内容描述：{{item.content}}</p>
                 <p class="mg-t-10">代码参考如下：</p>
             </div>
             <code_view class="mg-b-10" :code="item.code[0]"></code_view>
-            <div class="mg-b-10 f14" style="color: #666666;">{{item.createTime}} • <span v-for=" (i, j) in item.tab" :key="j">{{((j - 1) != item.tab.length)?'、':''}}{{i}}</span></div>
+            <div class="mg-b-10 f14" style="color: #666666;">{{item.createTime}} • <span v-for=" (i, j) in item.tab" :key="j">{{((j + 1) != item.tab.length)?'•':''}}{{i}}</span></div>
         </div>
     </div>
 </template>
@@ -51,7 +57,7 @@ export default {
                     content:`在实现权限切换tab时，在custom-tab-bar文件内的生命周期attached中进行更改list列表或者状态参数，无法生效，
                             对此问题进行了查阅与搜索，该问题曾在2020年被提出，至今仍未修复，
                             最后通过在生命周期ready中或者页面中通过this.getTabBar().setData方法解决。`,
-                    code:[`if (typeof this.getTabBar === 'function' && this.getTabBar()) { \n  this.getTabBar().setData({ \n  identity: 'user' \n }) \n}`],
+                    code:[`if (typeof this.getTabBar === 'function' && this.getTabBar()) { \n  this.getTabBar().setData({ \n  identity: 'user' //身份认证参数 \n }) \n}`],
                     createTime:'2022/10/25',
                     tab:['微信小程序'],
                     type:'xcx'
@@ -119,8 +125,74 @@ export default {
                     id:4,
                     title:'图片压缩-重绘',
                     scenes:'对图片打水印，压缩',
-                    content:` `,
-                    code:[``],
+                    content:`js对图片压缩的方式，目前了解的有两种，大概的思路就是： 1、获取图片文件；2、对图片用cavas进行重绘；压缩主要在canvas重绘中进行，一种是重绘中将图片按一定的宽高比进行缩小按比例压缩，一种是根据canvas转blob时规定转成的图片类型与质量进行压缩，所以第一种可以简单称为按比例压缩，第二种可以叫质量压缩；`,
+                    code:[`
+                    // file为上传图片文件对象，将上传的图片文件，转成img节点抛出
+                    const createImg  =function(file){
+                        return new Promise((res,err)=>{
+                            let reader = new FileReader()
+                            reader.addEventListener('load', () => {
+                                let img = new Image()
+                                img.src = reader.result
+                                img.addEventListener('load', () => res(img))
+                            })
+                            reader.readAsDataURL(file)
+                        })
+                    }
+                    // 创建canvas对象，将img节点绘制到canvas上，按比例压缩时，将canvas宽高按一定比例缩小（如以下缩小为原图的5倍），drawImage绘制后，将canvas抛出
+                    const imgToCanvas = function(file){
+                        return new Promise((res,err)=>{
+                            createImg(file).then(img=>{
+                                let canvas = document.createElement('canvas')
+
+                                canvas.width = img.width / 5
+                                canvas.height = img.height / 5
+
+                                let ctx = canvas.getContext('2d')
+                                ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+                                res({canvas})
+                            })
+                        })
+                    }
+                    // 打水印与输出压缩后的图片，watermarkUrl为水印图地址，如果采用质量压缩，
+                    // 那么就应该在canvas.toBlob()的第二个参数与第三个参数设置（image/jpeg(image/webp),(0~1)），前一个为类型，后一个为图片质量；
+                    const watermark = function(file, watermarkUrl){
+                        let canvas;
+                        return new Promise((resolve, reject) => {
+                            imgToCanvas(file).then(res=>{
+                                canvas = res.canvas
+                                let ctx = canvas.getContext('2d')
+                                if(watermarkUrl){
+                                    let img = new Image()
+                                    img.src = watermarkUrl
+                                    img.setAttribute("crossOrigin",'Anonymous')
+                                    img.addEventListener('load', () => {
+                                        //绘制图片
+                                        let img_width = canvas.width * 0.6,
+                                            img_height = img.height / (img.width / img_width),
+                                            x = (canvas.width - img_width) /2,
+                                            y = (canvas.height - img_height)/2;
+                                        ctx.globalAlpha=0.3;//设置透明度
+                                        ctx.drawImage(img, 0, 0, img.width, img.height, x, y, img_width, img_height )
+                                        canvas.toBlob(blob => {
+                                            let kb = blob.size / 1024 
+                                            let m = blob.size / 1024 / 1024
+                                            console.log(kb+'kb', m+'m');
+                                            resolve(blob)
+                                        })
+                                    })
+                                }else{
+                                    canvas.toBlob(blob => {
+                                        let kb = blob.size / 1024 
+                                        let m = blob.size / 1024 / 1024
+                                        console.log(kb + 'kb', m + 'm');
+                                        resolve(blob)
+                                    })
+                                }
+                            })
+                        })
+                    }
+                    `],
                     createTime:'2022/10/25',
                     tab:['图片压缩','水印'],
                     type:'js'

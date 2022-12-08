@@ -2,7 +2,7 @@
 @media (min-width:500px) {
     #navBox{
         width: 100%;
-        background-color: white;
+        background-color: rgba(255, 255, 255, 0.692);
         z-index: 10;
         position: sticky;
         top: 0;
@@ -15,9 +15,19 @@
             align-items: center;
             width: 80%;
             .itemBox{
-                padding: 4px 10px;
+                padding: 4px 16px;
                 margin-right: 10px;
                 cursor: pointer;
+                background-color: rgb(110, 255, 255);
+                background: linear-gradient(to left, rgb(110, 255, 255), rgba(123, 255, 123, 0));
+                border-radius: 50px;
+                text-align: center;
+                line-height: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                color: #707070;
+                // color: #ff4b4b;
             }
         }
     }
@@ -32,7 +42,7 @@
 <template>
     <div id="navBox" class="pd-10">
         <div class="navList">
-            <div class="itemBox" :style="{'color':type==item.value?'red':'',}" v-for="item in list" :key="item.id" @click="clickLink" :data-type="item.value">
+            <div class="itemBox" :style="{'color':type==item.value?'#ff4b4b':'','background':type==item.value?'linear-gradient(to left, rgba(123, 255, 123, 0), rgba(255, 81, 133, 0.5))':''}" v-for="item in list" :key="item.id" @click="clickLink" :data-type="item.value">
                 {{item.name}}
             </div>
         </div>

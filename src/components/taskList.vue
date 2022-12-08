@@ -4,7 +4,9 @@
     #taskListBox{
         position: sticky;
         z-index: 1;
-        background-color: white;
+        // background-color: white;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.404);
         min-width: 200px;
         min-height: 300px;
         max-height: 300px;
