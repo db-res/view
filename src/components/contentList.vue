@@ -30,12 +30,17 @@
     <div class="Listbox">
         <div class="contentbox pd-10 mg-b-10"  v-for="item in list" :style="{'display':type == item.type?'block':'none'}" :key="item.id"> 
             <div class="mg-b-10 f20" style="font-weight: 500;">{{item.title}}</div>
-            <div class="mg-b-10  pd-10 sceneBox" style="">
-                <p class="">场景：{{item.scenes}}</p>
-                <p class="mg-t-10">内容描述：{{item.content}}</p>
-                <p class="mg-t-10">代码参考如下：</p>
+            <div :id="'filterBox'+item.id" class="mg-b-10" :style="{'height':(item.showMin ?'200':item.height)+'px'}" style="overflow: hidden;position: relative;">
+                <div class="mg-b-10  pd-10 sceneBox" style="">
+                    <p class="">场景：{{item.scenes}}</p>
+                    <p class="mg-t-10">内容描述：{{item.content}}</p>
+                    <p class="mg-t-10">代码参考如下：</p>
+                </div>
+                <code_view class="" :code="item.code[0]"></code_view>
+                <div style="position: absolute;height: 50px;width: 100%;bottom: 0;left: 0;z-index: 9;">
+                    <div style="width: 100%;height: 100%;filter: blur(20px);background: #ffffff;"></div>
+                </div>
             </div>
-            <code_view class="mg-b-10" :code="item.code[0]"></code_view>
             <div class="mg-b-10 f14" style="color: #666666;">{{item.createTime}} • <span v-for=" (i, j) in item.tab" :key="j">{{((j + 1) != item.tab.length)?'•':''}}{{i}}</span></div>
         </div>
     </div>
@@ -55,8 +60,8 @@ export default {
                     title:'小程序自定义tab踩坑',
                     scenes:'权限控制底部tab显示',
                     content:`在实现权限切换tab时，在custom-tab-bar文件内的生命周期attached中进行更改list列表或者状态参数，无法生效，
-                            对此问题进行了查阅与搜索，该问题曾在2020年被提出，至今仍未修复，
-                            最后通过在生命周期ready中或者页面中通过this.getTabBar().setData方法解决。`,
+                            对此问题进行了查阅与搜索，发现custom-tab-bar文件属于自定义组件，在每个tab页上独立存在，
+                            可通过在生命周期ready中或者页面中通过this.getTabBar().setData方法解决。`,
                     code:[`if (typeof this.getTabBar === 'function' && this.getTabBar()) { \n  this.getTabBar().setData({ \n  identity: 'user' //身份认证参数 \n }) \n}`],
                     createTime:'2022/10/25',
                     tab:['微信小程序'],
@@ -193,9 +198,44 @@ export default {
                         })
                     }
                     `],
-                    createTime:'2022/10/25',
+                    createTime:'2022/12/08',
                     tab:['图片压缩','水印'],
                     type:'js'
+                },
+                {
+                    id:5,
+                    title:'小程序全局路由监听与控制显示相关组件与分享页面',
+                    scenes:'实现小程序根据页面路径控制显示分享按钮组件',
+                    content:`1、首先通过wx.onAppRoute(Function)监控页面跳转获取页面路径，2、再在需要显示的页面引入自定义组件，在自定义组件内部根据监控到的页面路径控制组件的显示与隐藏，
+                    3、当用户点击组件触发分享周期函数时，对当前页面分享进行自定义分享内容，分享数据由自定义组件获取，属于异步操作，所以自定义分享参数需要用到promise`,
+                    code:[`
+                    // 监听页面跳转
+                    wx.onAppRoute((res) => { 
+                        console.log('监听数据',res)    
+                    })
+                    // 自定义分享内容
+                    onShareAppMessage: function (e) {
+                        if (e.from === 'button') {
+                            let promise = new Promise(res=>{
+                                setTimeout(function (params) {
+                                    res({
+                                        title: '自定义标题',
+                                        path: '/pages/index/index',
+                                        imageUrl: '自定义图片-网络地址',
+                                    })
+                                },300)
+                            })
+                            return {
+                                title: '自定义标题',
+                                path: '/pages/index/index',
+                                imageUrl: '自定义图片-网络地址',
+                                promise: promise
+                            }
+                        }
+                    }`],
+                    createTime:'2022/12/9',
+                    tab:['微信小程序'],
+                    type:'xcx'
                 },
             ]
         }
@@ -210,5 +250,12 @@ export default {
     created(){
         this.type = this.$store.state.nav && this.$store.state.nav.type || ''
     },  
+    mounted(){
+        // console.log(44444444555555555,document.getElementById('filterBox').clientHeight);
+        this.list.forEach((item,index,arr)=>{
+            arr[index].height = document.getElementById(('filterBox'+item.id)).clientHeight
+            arr[index].showMin = arr[index].height > 200?true:false
+        })
+    },
 }
 </script>

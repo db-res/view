@@ -154,7 +154,7 @@
                     // }
                 }
                 this.wordList = JSON.parse(JSON.stringify(this.wordList))
-                console.log(this.wordList);
+                // console.log(this.wordList);
             
         },
         mounted(){
