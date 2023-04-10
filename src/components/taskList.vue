@@ -46,11 +46,11 @@ export default{
             list:[
                 {name:'原神本地搭建实例', id:0, finish:true},
                 {name:'threejs实例', id:1, finish:true},
-                {name:'音乐实例', id:2, finish:false},
+                {name:'音乐实例', id:2, finish:true},
                 {name:'markdown实例', id:3, finish:false},
                 {name:'文字游戏', id:3, finish:false},
-                {name:'uni音乐app', id:4, finish:false},
-                {name:'uni记账app', id:5, finish:false},
+                {name:'uni音乐app', id:4, finish:true},
+                {name:'uni记账app', id:5, finish:true},
             ]
         }
     }
