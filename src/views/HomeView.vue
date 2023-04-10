@@ -21,16 +21,16 @@
 <template>
   <div id="homeBox">
     <photoSphere :background="true"></photoSphere>
-    <navT></navT>
+    <navT class=""></navT>
     <div class="content mg-t-10" style="flex-grow: 6;">
-      <contentList class="mg-r-10 mg-l-10 W100" v-show="type == 'xcx' || type == 'game' || type == 'js'"></contentList>
-      <div class="mg-r-10 mg-l-10 W100" v-show="type == 'three'">
-        <iframe style="background-color: #eeeeee;" src="https://db-res.github.io/move/" loading class="show frame" frameborder="0"></iframe>
+      <contentList class="mg-r-10 mg-l-10 W100" v-show="isShowContentList"></contentList>
+      <div class="mg-r-10 mg-l-10 W100" v-show="isShowIframe">
+        <iframe style="background-color: #eeeeee;" :src="iframeUrl" loading class="show frame" frameborder="0"></iframe>
       </div>
       <div class="mg-r-10 mg-l-10 W100" v-show="type == 'music'">
         <musicBox></musicBox>
       </div>
-      <taskList class="mg-r-10" style="flex-grow: 1;"></taskList>
+      <taskList class="mg-r-10 pc-only" style="flex-grow: 1;"></taskList>
     </div>
   </div>
 </template>
@@ -47,8 +47,26 @@
     },
     data () {
       return {
-        type: this.$store.state.nav.type
+        type: this.$store.state.nav.type,
+        iframeUrl:''
       }
+    },
+    computed:{
+      isShowContentList(){
+        let type = this.type
+        return type == 'xcx' || type == 'game' || type == 'js'
+      },
+      isShowIframe(){
+        let type = this.type
+        switch (type) {
+          case 'three':
+            this.iframeUrl = "https://db-res.github.io/move/"
+            break;
+          default:
+            break;
+        }
+        return type == 'three'
+      },  
     },
     watch:{
         '$store.state.nav.type':{

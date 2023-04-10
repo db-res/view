@@ -4,7 +4,6 @@
     #taskListBox{
         position: sticky;
         z-index: 1;
-        // background-color: white;
         border-radius: 10px;
         background: rgba(255, 255, 255, 0.404);
         min-width: 200px;
@@ -13,19 +12,8 @@
         overflow-y: auto;
         height: fit-content;
         .listItemBox{
-            // width: 100%;
             padding: 4px 10px;
             border-bottom: 1px solid #eee;
-        }
-    }
-    @media (max-width:500px) {
-        #taskListBox{
-            display: none;
-        }
-    }
-    @media (min-width:500px) {
-        #taskListBox{
-            top: 55px;
         }
     }
 </style>

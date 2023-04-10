@@ -1,5 +1,4 @@
 <style lang="scss">
-@media (min-width:500px) {
     #navBox{
         width: 100%;
         background-color: rgba(255, 255, 255, 0.692);
@@ -27,24 +26,24 @@
                 display: flex;
                 align-items: center;
                 color: #707070;
-                // color: #ff4b4b;
             }
         }
     }
-}
-@media (max-width:500px){
-    #navBox{
-        display: none;
-    }
-}
 </style>
 
 <template>
-    <div id="navBox" class="pd-10">
-        <div class="navList">
-            <div class="itemBox" :style="{'color':type==item.value?'#ff4b4b':'','background':type==item.value?'linear-gradient(to left, rgba(123, 255, 123, 0), rgba(255, 81, 133, 0.5))':''}" v-for="item in list" :key="item.id" @click="clickLink" :data-type="item.value">
-                {{item.name}}
+    <div>
+        <div class="pc-only">
+            <div id="navBox" class="pd-10 ">
+                <div class="navList">
+                    <div class="itemBox" :style="{'color':type==item.value?'#ff4b4b':'','background':type==item.value?'linear-gradient(to left, rgba(123, 255, 123, 0), rgba(255, 81, 133, 0.5))':''}" v-for="item in list" :key="item.id" @click="clickLink" :data-type="item.value">
+                        {{item.name}}
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="mobile-only">
+            
         </div>
     </div>
 </template>

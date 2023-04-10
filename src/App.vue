@@ -26,4 +26,19 @@ import { RouterLink, RouterView } from 'vue-router'
     .l-#{$i} {left: - (1px * $i)}
     .r-#{$i} {right: - (1px * $i)}
   }
+
+  .pc-only {
+    display: block;
+  }
+  .mobile-only{
+    display: block;
+  }
+  @media only screen and (max-width: 767px) {
+    .pc-only {
+      display: none;
+    }
+    .mobile-only{
+      display: block;
+    }
+  }
 </style>
