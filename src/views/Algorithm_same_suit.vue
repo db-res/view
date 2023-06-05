@@ -165,21 +165,52 @@ export default {
 
         // 从数组中获取给定大小的所有组合
         getCombinations(array, size) {
+            // 递归计算
+            // const combinations = [];
+        
+            // function generateCombination(currentCombination, startIndex) {
+            // if (currentCombination.length >= size) {
+            //     combinations.push(currentCombination);
+            //     // return;
+            // }
+        
+            // for (let i = startIndex; i < array.length; i++) {
+            //     generateCombination([...currentCombination, array[i]], i + 1);
+            // }
+            // }
+        
+            // generateCombination([], 0);
+            // return combinations;
+
+            // 优化
             const combinations = [];
-        
-            function generateCombination(currentCombination, startIndex) {
-            if (currentCombination.length >= size) {
-                combinations.push(currentCombination);
-                // return;
+            const stack = [];
+            let index = 0;
+
+            while (true) {
+                if (stack.length >= size) {
+                    combinations.push(stack.slice());
+                    index++;
+                }
+
+                if (index >= array.length) {
+                    if (stack.length === 0) {
+                        break;
+                    }
+
+                    index = stack.pop() + 1;
+                } else {
+                    stack.push(index);
+                    index++;
+                }
             }
-        
-            for (let i = startIndex; i < array.length; i++) {
-                generateCombination([...currentCombination, array[i]], i + 1);
+
+            const result = [];
+            for (const combination of combinations) {
+                result.push(combination.map(index => array[index]));
             }
-            }
-        
-            generateCombination([], 0);
-            return combinations;
+
+            return result;
         },
 
         // 计算组合的点数
