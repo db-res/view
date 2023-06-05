@@ -62,28 +62,35 @@ export default {
         //   selectedCards.push(card);
         // }
         selectedCards = [
-            { suit: '♠', point: 2 },
-            { suit: '♥', point: 12 },
-            { suit: '♦', point: 7 },
-            { suit: '♣', point: 8 },
-            { suit: '♣', point: 9 },
-            { suit: '♠', point: 11 },
-            { suit: '♠', point: 3 },
-            { suit: '♦', point: 10 },
-            { suit: '♥', point: 2 },
-            { suit: '♠', point: 10 },
-            { suit: '♥', point: 11 },
-            { suit: '♣', point: 11 },
-            { suit: '♠', point: 5 },
-            { suit: '♥', point: 3 },
-            { suit: '♠', point: 13 },
-            { suit: '♣', point: 1 },
-            { suit: '♠', point: 9 },
-            { suit: '♣', point: 1 },
-            { suit: '♣', point: 13 },
-            { suit: '♣', point: 12 }
+            { checked: true, suit: '♠', point: 2 },
+            { checked: true, suit: '♥', point: 12 },
+            { checked: true, suit: '♦', point: 7 },
+            { checked: true, suit: '♣', point: 8 },
+            { checked: true, suit: '♣', point: 9 },
+            { checked: true, suit: '♠', point: 11 },
+            { checked: true, suit: '♠', point: 3 },
+            { checked: true, suit: '♦', point: 10 },
+            { checked: true, suit: '♥', point: 2 },
+            { checked: true, suit: '♣', point: 10 },
+            { checked: true, suit: '♥', point: 11 },
+            { checked: true, suit: '♣', point: 11 },
+            { checked: true, suit: '♠', point: 5 },
+            { checked: true, suit: '♥', point: 3 },
+            { checked: true, suit: '♠', point: 13 },
+            { checked: true, suit: '♣', point: 1 },
+            { checked: true, suit: '♠', point: 9 },
+            { checked: true, suit: '♣', point: 1 },
+            { checked: true, suit: '♣', point: 13 },
+            { checked: true, suit: '♣', point: 12 }
         ]
-        // console.log(selectedCards);
+        this.deck.map(i=>{
+            if(selectedCards.filter(ii=>ii.suit===i.suit&&ii.point===i.point).length>0){
+                i.checked = true
+            }
+        })
+        this.selectedCards=(this.deck.filter(i=>i.checked))
+        // this.selectedCards= selectedCards
+        console.log(selectedCards);
         // 在所选卡片中找到最佳组合
         // const bestCombination = findBestCombinations(selectedCards);
         
@@ -115,6 +122,14 @@ export default {
             }
             // this.loading = false
         },  
+        shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        },
+
         getPoint(data){
             this.deck.map(item=>{
                 if(item.point===data.point&&item.suit===data.suit){
@@ -124,7 +139,8 @@ export default {
                     }
                 }
             })
-            this.selectedCards=this.deck.filter(i=>i.checked)
+            this.selectedCards=(this.deck.filter(i=>i.checked))
+            
         },  
         strPoint(value){
             let a = value
@@ -166,51 +182,51 @@ export default {
         // 从数组中获取给定大小的所有组合
         getCombinations(array, size) {
             // 递归计算
-            // const combinations = [];
-        
-            // function generateCombination(currentCombination, startIndex) {
-            // if (currentCombination.length >= size) {
-            //     combinations.push(currentCombination);
-            //     // return;
-            // }
-        
-            // for (let i = startIndex; i < array.length; i++) {
-            //     generateCombination([...currentCombination, array[i]], i + 1);
-            // }
-            // }
-        
-            // generateCombination([], 0);
-            // return combinations;
+                const combinations = [];
+                
+                function generateCombination(currentCombination, startIndex) {
+                  if (startIndex >= array.length) {
+                    if (currentCombination.length > 0) {
+                      combinations.push(currentCombination);
+                    }
+                    return;
+                  }
+            
+                  generateCombination(currentCombination, startIndex + 1);
+                  generateCombination([...currentCombination, array[startIndex]], startIndex + 1);
+                }
+            
+                generateCombination([], 0);
+                return combinations;
 
             // 优化
-            const combinations = [];
-            const stack = [];
-            let index = 0;
+            // const combinations = [];
+            // const stack = [];
+            // let index = 0;
 
-            while (true) {
-                if (stack.length >= size) {
-                    combinations.push(stack.slice());
-                    index++;
-                }
+            // while (true) {
+            //     if (stack.length >= size) {
+            //         combinations.push(stack.slice());
+            //         index++;
+            //     }
 
-                if (index >= array.length) {
-                    if (stack.length === 0) {
-                        break;
-                    }
+            //     if (index >= array.length) {
+            //         if (stack.length === 0) {
+            //             break;
+            //         }
 
-                    index = stack.pop() + 1;
-                } else {
-                    stack.push(index);
-                    index++;
-                }
-            }
+            //         index = stack.pop() + 1;
+            //     } else {
+            //         stack.push(index);
+            //         index++;
+            //     }
+            // }
 
-            const result = [];
-            for (const combination of combinations) {
-                result.push(combination.map(index => array[index]));
-            }
-
-            return result;
+            // const result = [];
+            // for (const combination of combinations) {
+            //     result.push(combination.map(index => array[index]));
+            // }
+            // return result;
         },
 
         // 计算组合的点数
@@ -236,15 +252,15 @@ export default {
         // 在给定的一组卡片中找到最佳组合
         findBestCombinations(cards) {
             const combinations = this.getCombinations(cards, 3);
-            // console.log('所有组合',combinations);
+            console.log('所有组合',combinations.length);
             const straightFlushCombinations = combinations.filter(combination => {
             // const sorted = combination.sort((a, b) => a.point.localeCompare(b.point));
             const sorted = combination.sort((a, b) => a.point - b.point);
             const isStraight = sorted.every((card, index) => index === 0 || card.point === (sorted[index - 1].point + 1));
             const isFlush = sorted.every(card => card.suit === sorted[0].suit);
-            // if (isStraight && isFlush) {
-            //     console.log(sorted,isStraight);
-            // }
+            if (isStraight && isFlush) {
+                // console.log(sorted,isStraight);
+            }
             return isStraight && isFlush;
             });
 
